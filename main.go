@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
 	// "github.com/Unknwon/goconfig"
 	// "github.com/go-macaron/gzip"
 	"gopkg.in/macaron.v1"
@@ -16,7 +16,7 @@ func main() {
 	m := macaron.Classic()
 	m.Use(macaron.Renderer())
 	m.Get("/", mainhandler)
-	m.Get("/submit", submithandler)
+	m.Post("/submit", submithandler)
 	m.Run()
 
 }
@@ -34,4 +34,12 @@ func mainhandler(ctx *macaron.Context) {
 
 func submithandler(ctx *macaron.Context) {
 
+	info1 := ctx.Req.FormValue("Info1")
+	info2 := ctx.Req.FormValue("Info2")
+	info3 := ctx.Req.FormValue("Info3")
+	info4 := ctx.Req.FormValue("Info4")
+	info5 := ctx.Req.FormValue("Info5")
+
+	fmt.Println(info1, info2, info3, info4, info5)
+	ctx.Redirect("/", 301)
 }
