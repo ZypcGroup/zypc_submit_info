@@ -5,6 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"time"
+	"zypc_submit/modules"
 )
 
 const (
@@ -69,21 +70,72 @@ type Infomation struct {
 }
 
 func init() {
-	datatype = DataType
-	database = Database
-	host = Host
-	port = Port
-	username = Username
-	password = Password
+	err := initconf()
+	if err != nil {
+		fmt.Println(err)
+	}
+
 }
 
-func RegisterDB() (err error) {
-
-	engine, err = xorm.NewEngine(datatype, username+":"+password+"@/"+database+"?charset=utf8")
-	fmt.Println(engine.Ping())
+func initconf() (err error) {
+	conf, err := modules.InitConf()
 	if err != nil {
 		return err
 	}
+
+	fmt.Println(conf)
+
+	if ok, err := conf.GetValue("DataControl", "DataType"); err == nil {
+		datatype = ok
+	} else {
+		datatype = DataType
+	}
+
+	if ok, err := conf.GetValue("DataControl", "DataBase"); err == nil {
+		database = ok
+	} else {
+		database = Database
+	}
+	if ok, err := conf.GetValue("DataControl", "Username"); err == nil {
+		username = ok
+	} else {
+		username = Username
+	}
+	if ok, err := conf.GetValue("DataControl", "Password"); err == nil {
+		password = ok
+	} else {
+		password = Password
+	}
+	if ok, err := conf.GetValue("DataControl", "Host"); err == nil {
+		host = ok
+	} else {
+		host = Host
+	}
+	if ok, err := conf.GetValue("DataControl", "Port"); err == nil {
+		port = ok
+	} else {
+		port = Port
+	}
+
+	return nil
+}
+
+func connectDB() (err error) {
+	engine, err = xorm.NewEngine(datatype, username+":"+password+"@tcp("+host+":"+port+")"+"/"+database+"?charset=utf8")
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
+
+func RegisterDB() (err error) {
+	err = connectDB()
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(engine.Ping())
 
 	if ok, _ := engine.IsTableExist("user"); !ok {
 		engine.CreateTables(new(User))
@@ -109,6 +161,7 @@ func ModifyUser() {
 
 func AddInfomation(info *Infomation) {
 	fmt.Println(info)
+
 }
 
 func ModifyInfomation() {
