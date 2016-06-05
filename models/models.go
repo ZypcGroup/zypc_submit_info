@@ -29,11 +29,13 @@ var (
 var engine *xorm.Engine
 
 type User struct {
-	UserId   int64 `xorm:"index"`
-	UserName int
-	Password string
-	Time     time.Time `xorm:"index"`
-	Flag     int
+	UserId    int64 `xorm:"index"`
+	UserName  string
+	Password  string
+	Time      time.Time `xorm:"index"`
+	Email     string
+	Telnumber string
+	Flag      int
 }
 
 type Topic struct {
@@ -149,33 +151,4 @@ func RegisterDB() (err error) {
 		engine.CreateTables(new(Infomation))
 	}
 	return nil
-}
-
-func AddUser(user *User) {
-
-}
-
-func ModifyUser() {
-
-}
-
-func AddInfomation(info *Infomation) {
-	fmt.Println(info)
-
-}
-
-func ModifyInfomation() {
-
-}
-
-func SearchInfomation() {
-
-}
-
-func ShowAllInfomation() {
-
-}
-
-func ExportInfomation() {
-
 }

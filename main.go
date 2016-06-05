@@ -44,7 +44,9 @@ func main() {
 	m.Use(macaron.Renderer())
 	m.Get("/", controller.Homehandler)
 	m.Post("/submit", controller.Submithandler)
-
+	m.Get("/login", controller.Loginhandler)
+	m.Post("/login", controller.LoginJudgehandler)
+	m.Post("/register", controller.Registerhandler)
+	m.Get("/errorinfo", controller.ErrorInfohandler)
 	m.Run(port)
-
 }
