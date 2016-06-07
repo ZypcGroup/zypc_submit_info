@@ -9,6 +9,7 @@ import (
 	// "github.com/go-macaron/session"
 	// "macaron/controller"
 	// "zypc_submit/models"
+	"time"
 )
 
 var conf *goconfig.ConfigFile
@@ -49,12 +50,27 @@ func init() {
 }
 
 func Homehandler(ctx *macaron.Context) {
+
+	sess, _ := Sess.Start(ctx)
+
+	createtime := sess.Get("CreateTime")
+	fmt.Println(createtime, "\n-------------\n")
+	if createtime == nil {
+		// fmt.Println(createtime, "\n-------------\n")
+		ctx.Redirect("/login", 301)
+	} else if (createtime.(int64) + 360) > time.Now().Unix() {
+		// fmt.Println(createtime, "\n-------------\n")
+
+		ctx.Data["IsLogin"] = true
+	} else {
+		ctx.Redirect("/login", 301)
+	}
+
 	ctx.Data["WebSiteTitle"] = websitetitle
 	ctx.Data["WebSiteHome"] = websitehome
 	ctx.Data["WebSiteLink"] = websitelink
 	ctx.Data["WebSiteIcon"] = websiteicon
 
-	ctx.Data["IsLogin"] = false
 	ctx.Data["Info1"] = "学号"
 	ctx.Data["Info2"] = "班级"
 	ctx.Data["Info3"] = "姓名"

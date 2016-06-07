@@ -13,7 +13,6 @@ import (
 	// "zypc_submit/models"
 )
 
-func Testhandler(ctx *macaron.Context) {
+func Test1handler(ctx *macaron.Context) {
 	fmt.Println("This is Test handler")
-
 }
