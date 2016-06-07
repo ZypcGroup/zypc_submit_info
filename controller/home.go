@@ -54,7 +54,7 @@ func Homehandler(ctx *macaron.Context) {
 	sess, _ := Sess.Start(ctx)
 
 	createtime := sess.Get("CreateTime")
-	fmt.Println(createtime, "\n-------------\n")
+	// fmt.Println(createtime, "\n-------------\n")
 	if createtime == nil {
 		// fmt.Println(createtime, "\n-------------\n")
 		ctx.Redirect("/login", 301)
@@ -64,6 +64,12 @@ func Homehandler(ctx *macaron.Context) {
 		ctx.Data["IsLogin"] = true
 	} else {
 		ctx.Redirect("/login", 301)
+	}
+
+	exit := ctx.Req.FormValue("exit")
+
+	if exit == "true" {
+		sess.Delete(createtime)
 	}
 
 	ctx.Data["WebSiteTitle"] = websitetitle
