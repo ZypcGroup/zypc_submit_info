@@ -39,6 +39,9 @@ func init() {
 	if ok := conf.MustInt("Server", "ListenPort"); ok != 0 {
 		port = ok
 	}
+
+	Sess, _ = session.NewManager("memory", session.Options{Provider: "memory"})
+	fmt.Println(Sess)
 }
 
 func main() {
@@ -53,15 +56,39 @@ func main() {
 	m.Get("/errorinfo", controller.ErrorInfohandler)
 	// m.Get("/test", controller.Testhandler)
 	m.Get("/test", Testhandler)
+	m.Get("/test2", Test2handler)
 	m.Run(port)
 }
 
 func Testhandler(ctx *macaron.Context, f *session.Flash) {
 	// sess.Set("session", "axiu session")
+	// sessid, _ := Sess.RegenerateId(ctx)
+	// fmt.Println(sessid.ID())
 
+	sess, _ := Sess.Start(ctx)
+
+	ct := sess.Get("Count")
+	if ct == nil {
+		sess.Set("Count", 1)
+	} else {
+		sess.Set("Count", (ct.(int) + 1))
+	}
+
+	fmt.Println(ct)
+	ctx.Data["Count"] = ct
 	f.Success("yes!!!")
 	f.Error("opps...")
 	f.Info("aha?!")
 	f.Warning("Just be careful.")
 	ctx.HTML(200, "test")
+}
+
+func Test2handler(ctx *macaron.Context, f *session.Flash) {
+	sess, _ := Sess.Start(ctx)
+	// sess.Set("Count", 1)
+	ct := sess.Get("Count")
+	fmt.Println(ct)
+	ctx.Data["Count"] = ct
+	ctx.HTML(200, "test")
+
 }
