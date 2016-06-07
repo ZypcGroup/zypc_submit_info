@@ -27,8 +27,15 @@ func SearchInfomation() {
 
 }
 
-func ShowAllInfomation() {
-
+func ShowInfomation() (Info *Infomation) {
+	connectDB()
+	var userid int64
+	userid = 4141168
+	// Infoi := &Infomation{UserId: userid}
+	Info = &Infomation{UserId: userid}
+	engine.Id(userid).Get(Info)
+	fmt.Println(Info)
+	return
 }
 
 func ExportInfomation() {
