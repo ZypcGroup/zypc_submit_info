@@ -51,6 +51,7 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 		createtime := sess.Get("CreateTime")
 		if createtime == nil {
 			sess.Set("CreateTime", time.Now().Unix())
+			sess.Set("UserID", user.UserId)
 			// sess.Set("Countnum", 1)
 			ctx.Redirect("/", 301)
 		} else {

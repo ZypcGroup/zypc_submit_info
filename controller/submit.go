@@ -1,20 +1,25 @@
 package controller
 
 import (
-	// "fmt"
+	"fmt"
 	// "github.com/Unknwon/goconfig"
 	// "github.com/go-macaron/gzip"
 	"gopkg.in/macaron.v1"
 	// "log"
 	// "github.com/go-macaron/session"
 	// "macaron/controller"
+	// "strconv"
 	"zypc_submit/models"
 )
 
 func Submithandler(ctx *macaron.Context) {
 
+	sess, _ := Sess.Start(ctx)
+	userid := sess.Get("UserID")
+	// fmt.Println(userid)
 	info := new(models.Infomation)
-
+	// info.UserId, _ = strconv.ParseInt(string(userid), 10, 64)
+	info.UserId = userid.(int64)
 	info.Info1 = ctx.Req.FormValue("Info1")
 	info.Info2 = ctx.Req.FormValue("Info2")
 	info.Info3 = ctx.Req.FormValue("Info3")
@@ -36,6 +41,12 @@ func Submithandler(ctx *macaron.Context) {
 	info.Info19 = ctx.Req.FormValue("info19")
 	info.Info20 = ctx.Req.FormValue("info20")
 
-	models.AddInfomation(info)
-	ctx.Redirect("/", 301)
+	rel := models.AddInfomation(info)
+	if rel {
+		ctx.Redirect("/ok", 301)
+	} else {
+		ErrorInfo = "信息提交失败！"
+		ctx.Redirect("/errorinfo", 301)
+	}
+
 }

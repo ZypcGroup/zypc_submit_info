@@ -54,5 +54,6 @@ func main() {
 	// m.Get("/test", controller.Testhandler)
 	m.Get("/test", controller.Testhandler)
 	m.Get("/test2", controller.Test2handler)
+	m.Get("/ok", controller.Okhandler)
 	m.Run(port)
 }
