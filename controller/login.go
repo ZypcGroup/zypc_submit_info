@@ -31,7 +31,7 @@ func Loginhandler(ctx *macaron.Context) {
 }
 
 func LoginJudgehandler(ctx *macaron.Context) (err error) {
-
+	user = nil
 	usernameinfo := ctx.Req.FormValue("userinfo")
 	if usernameinfo[1] >= '0' && usernameinfo[1] <= '9' {
 		user.UserId, err = strconv.ParseInt(usernameinfo, 10, 64)
