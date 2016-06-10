@@ -16,8 +16,6 @@ import (
 
 var Sess *session.Manager
 
-var user = new(models.User)
-
 func init() {
 	Sess, _ = session.NewManager("memory", session.Options{Provider: "memory"})
 	// fmt.Println(Sess)
@@ -31,7 +29,8 @@ func Loginhandler(ctx *macaron.Context) {
 }
 
 func LoginJudgehandler(ctx *macaron.Context) (err error) {
-	user = nil
+	var user = new(models.User)
+
 	usernameinfo := ctx.Req.FormValue("userinfo")
 	if usernameinfo[1] >= '0' && usernameinfo[1] <= '9' {
 		user.UserId, err = strconv.ParseInt(usernameinfo, 10, 64)
@@ -68,11 +67,12 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 		ctx.Redirect("/errorinfo", 301)
 
 	}
+
 	return nil
 }
 
 func Registerhandler(ctx *macaron.Context) (err error) {
-	user = nil
+	var user = new(models.User)
 	userid := ctx.Req.FormValue("userid")
 	user.UserId, err = strconv.ParseInt(userid, 10, 64)
 
@@ -93,7 +93,6 @@ func Registerhandler(ctx *macaron.Context) (err error) {
 		ErrorInfo = "用户已存在，请查看用户信息填写是否正确无误，如果无误，请联系管理员。"
 		ctx.Redirect("/errorinfo", 301)
 	}
-
 	if err != nil {
 		return err
 	}
@@ -102,7 +101,6 @@ func Registerhandler(ctx *macaron.Context) (err error) {
 }
 
 func NoUser(userid int64) bool {
-	user = nil
 	has, _ := models.CheckUser(userid)
 
 	return has
