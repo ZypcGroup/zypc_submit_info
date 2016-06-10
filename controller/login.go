@@ -72,7 +72,7 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 }
 
 func Registerhandler(ctx *macaron.Context) (err error) {
-
+	user = nil
 	userid := ctx.Req.FormValue("userid")
 	user.UserId, err = strconv.ParseInt(userid, 10, 64)
 
@@ -102,6 +102,7 @@ func Registerhandler(ctx *macaron.Context) (err error) {
 }
 
 func NoUser(userid int64) bool {
+	user = nil
 	has, _ := models.CheckUser(userid)
 
 	return has
