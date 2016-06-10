@@ -1,7 +1,7 @@
 package controller
 
 import (
-	// "fmt"
+	"fmt"
 	// "github.com/Unknwon/goconfig"
 	// "github.com/go-macaron/gzip"
 	"gopkg.in/macaron.v1"
@@ -42,7 +42,7 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 		user.UserName = usernameinfo
 	}
 	user.Password = ctx.Req.FormValue("passwd")
-	// fmt.Println(user)
+	fmt.Println(user)
 
 	if ok, _ := models.JudgeUser(user); ok {
 
@@ -53,6 +53,11 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 			sess.Set("CreateTime", time.Now().Unix())
 			sess.Set("UserID", user.UserId)
 			// sess.Set("Countnum", 1)
+			ctx.Redirect("/", 301)
+		} else if (createtime.(int64) + 360) > time.Now().Unix() {
+			// fmt.Println(createtime, "\n-------------\n")
+
+			ctx.Data["IsLogin"] = true
 			ctx.Redirect("/", 301)
 		} else {
 			ctx.Redirect("/login", 301)
