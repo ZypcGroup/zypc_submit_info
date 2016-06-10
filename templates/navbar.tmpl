@@ -2,7 +2,9 @@
 <div class="container">
     <a class="navbar-brand" href={{.WebSiteLink}}>{{.WebSiteHome}}</a>
     <ul class="nav navbar-nav">
-        <li><a href="/">{{.WebSiteTitle}}</a> </li>
+        <li {{if .IsHome}}class="active"{{end}} ><a href="/">{{.WebSiteTitle}}</a> </li>
+        <li {{if .IsInfo}}class="active"{{end}} ><a href="/show">提交信息查看</a> </li>
+    
     </ul>
 
 

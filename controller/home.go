@@ -76,6 +76,7 @@ func Homehandler(ctx *macaron.Context) {
 	ctx.Data["WebSiteHome"] = websitehome
 	ctx.Data["WebSiteLink"] = websitelink
 	ctx.Data["WebSiteIcon"] = websiteicon
+	ctx.Data["IsHome"] = true
 
 	ctx.Data["Info1"] = "学号"
 	ctx.Data["Info2"] = "班级"

@@ -1,1 +1,53 @@
-{{.Info}}
+{{template "header" .}}
+<title>{{.WebSiteTitle}}</title>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">{{template "navbar" .}}</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+ <table class="table table-striped">
+	                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>名称</th>
+                            <th>文章数</th>
+                            <th>操作</th>
+
+                        </tr>
+                    </thead>
+
+{{range .AllInfo}}
+                    <tbody>
+                        <tr>
+                            <th>{{.Info2}}</th>
+                            <th>{{.Info3}}</th>
+                            <th>{{.Info4}}</th>
+                            <th>
+                                <a href="{{.Info4}}" >删除</a>
+                            </th>
+                        </tr>
+                        </tbody>
+
+{{end}}
+
+	</table>
+	</div>
+{{template "footer" .}}
+
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/3.0.0-alpha1/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+<!-- 
+<script type="text/javascript" src=""></script>
+-->
+
+
+</body>
+</html>

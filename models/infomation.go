@@ -38,6 +38,16 @@ func ShowInfomation() (Info *Infomation) {
 	return
 }
 
+func ShowAllInfomation() (AllInfo []*Infomation) {
+	connectDB()
+	// Infoi := &Infomation{UserId: userid}
+
+	AllInfo = make([]*Infomation, 0)
+	engine.Find(&AllInfo)
+	fmt.Println(AllInfo)
+	return
+}
+
 func ExportInfomation() {
 
 }
