@@ -150,5 +150,7 @@ func RegisterDB() (err error) {
 	if ok, _ := engine.IsTableExist("infomation"); !ok {
 		engine.CreateTables(new(Infomation))
 	}
+
+	defer engine.Close()
 	return nil
 }

@@ -15,6 +15,8 @@ func AddInfomation(info *Infomation) bool {
 	if err == nil {
 		return true
 	}
+	defer engine.Close()
+
 	return false
 
 }
@@ -35,6 +37,8 @@ func ShowInfomation() (Info *Infomation) {
 	Info = &Infomation{UserId: userid}
 	engine.Id(userid).Get(Info)
 	fmt.Println(Info)
+	defer engine.Close()
+
 	return
 }
 
@@ -45,6 +49,8 @@ func ShowAllInfomation() (AllInfo []*Infomation) {
 	AllInfo = make([]*Infomation, 0)
 	engine.Find(&AllInfo)
 	fmt.Println(AllInfo)
+	defer engine.Close()
+
 	return
 }
 

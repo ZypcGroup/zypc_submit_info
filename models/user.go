@@ -14,6 +14,8 @@ func AddUser(user *User) (err error) {
 	if err != nil {
 		return err
 	}
+	defer engine.Close()
+
 	return nil
 }
 
@@ -24,6 +26,8 @@ func CheckUser(userid int64) (has bool, err error) {
 	if err != nil {
 		return false, err
 	}
+	defer engine.Close()
+
 	return has, nil
 }
 
