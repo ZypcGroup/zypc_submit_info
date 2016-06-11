@@ -46,7 +46,12 @@ func init() {
 	if ok, err := conf.GetValue("AppInfo", "WebSiteIcon"); err == nil {
 		websiteicon = ok
 	}
-
+	// Debug info
+	if ok, err := conf.GetValue("Server", "Debug"); err == nil {
+		if ok == "true" {
+			Debug = true
+		}
+	}
 }
 
 func Homehandler(ctx *macaron.Context) {

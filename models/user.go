@@ -1,11 +1,11 @@
 package models
 
 import (
-// "fmt"
-// _ "github.com/go-sql-driver/mysql"
-// "github.com/go-xorm/xorm"
-// "time"
-// "zypc_submit/modules"
+	"fmt"
+	// _ "github.com/go-sql-driver/mysql"
+	// "github.com/go-xorm/xorm"
+	// "time"
+	// "zypc_submit/modules"
 )
 
 func AddUser(user *User) (err error) {
@@ -32,6 +32,7 @@ func ModifyUser() {
 }
 
 func JudgeUser(user *User) (has bool, err error) {
+	fmt.Println(user)
 	has, err = engine.Get(user)
 	if err != nil {
 		return false, err

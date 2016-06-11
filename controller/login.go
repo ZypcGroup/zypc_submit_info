@@ -16,10 +16,12 @@ import (
 
 var Sess *session.Manager
 
+var Debug bool = false
+
 func init() {
+	// Sess = new(session.Manager)
 	Sess, _ = session.NewManager("memory", session.Options{Provider: "memory"})
 	// fmt.Println(Sess)
-
 }
 
 func Loginhandler(ctx *macaron.Context) {
@@ -41,7 +43,9 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 		user.UserName = usernameinfo
 	}
 	user.Password = ctx.Req.FormValue("passwd")
-	fmt.Println(user)
+	if Debug {
+		fmt.Println(user)
+	}
 
 	if ok, _ := models.JudgeUser(user); ok {
 
@@ -65,6 +69,10 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 	} else {
 		ErrorInfo = "用户名错误或者密码错误！"
 		ctx.Redirect("/errorinfo", 301)
+
+	}
+	if Debug {
+		fmt.Println(user)
 
 	}
 

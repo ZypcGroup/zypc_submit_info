@@ -44,7 +44,10 @@ func init() {
 func main() {
 	m := macaron.Classic()
 	m.Use(macaron.Renderer())
-	m.Use(session.Sessioner())
+	m.Use(session.Sessioner(session.Options{
+		Provider:       "file",
+		ProviderConfig: "data/sessions",
+	}))
 	m.Get("/", controller.Homehandler)
 	m.Post("/submit", controller.Submithandler)
 	m.Get("/login", controller.Loginhandler)
@@ -52,8 +55,7 @@ func main() {
 	m.Post("/register", controller.Registerhandler)
 	m.Get("/errorinfo", controller.ErrorInfohandler)
 	// m.Get("/test", controller.Testhandler)
-	m.Get("/test", controller.Testhandler)
-	m.Get("/test2", controller.Test2handler)
+
 	m.Get("/ok", controller.Okhandler)
 	m.Get("/show", controller.Showhandler)
 	m.Run(port)
