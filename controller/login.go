@@ -44,7 +44,7 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 	}
 	user.Password = ctx.Req.FormValue("passwd")
 	if Debug {
-		fmt.Println(user)
+		fmt.Println(user, "pre")
 	}
 
 	if ok, _ := models.JudgeUser(user); ok {
@@ -72,7 +72,7 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 
 	}
 	if Debug {
-		fmt.Println(user)
+		fmt.Println(user, "Debug")
 
 	}
 

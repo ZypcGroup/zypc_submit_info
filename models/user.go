@@ -36,10 +36,13 @@ func ModifyUser() {
 }
 
 func JudgeUser(user *User) (has bool, err error) {
-	fmt.Println(user)
+	connectDB()
 	has, err = engine.Get(user)
+	// mt.Println(user, "judge user")
 	if err != nil {
 		return false, err
 	}
+	fmt.Println(user, "judge user")
+	defer engine.Close()
 	return has, nil
 }
